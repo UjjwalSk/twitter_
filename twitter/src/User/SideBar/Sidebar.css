@@ -1,0 +1,56 @@
+.sidebar {
+  border-right: 1px solid var(--twitter-background);
+  flex: 0.25;
+  margin-top: 20px;
+  padding-left: 20px;
+  padding-right: 20px;
+}
+
+.sidebar__twitterIcon {
+  color: var(--twitter-color);
+  font-size: 30px !important;
+  margin-left: 20px;
+  margin-bottom: 20px;
+}
+
+.sidebar__tweet {
+  background-color: var(--twitter-color) !important;
+  border: none !important;
+  color: white !important;
+  font-weight: 100 !important;
+  text-transform: inherit !important;
+  border-radius: 30px !important;
+  height: 50px !important;
+  margin-top: 20px !important;
+}
+
+.sidebarLoggOut {
+  display: flex;
+  justify-content: space-between;
+  margin-top:20px;
+  padding:20px 40px;
+}
+
+.sidebarLoggOut>div:nth-child(1){
+  display: flex;
+  justify-content: space-between;
+}
+
+.sidebarLoggOut>div:nth-child(1)>div:nth-child(2){
+  margin-left:15px;
+}
+
+.sidebarLoggOut>div:nth-child(1)>div:nth-child(2)>p:nth-child(1){
+  font-size:1.18rem;
+  font-weight:500;
+}
+
+.sidebarLoggOut>div:nth-child(1)>div:nth-child(2)>p:nth-child(2){
+  font-size:0.9rem;
+  color:#6d6d6d;
+  font-weight:500;
+}
+
+.loggOutIcon{
+  font-size:1.7rem !important;
+}

@@ -1,0 +1,34 @@
+.admin {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.admin .MuiTableContainer-root {
+    width: 70%;
+    margin-top:30px;
+}
+
+.admin nav {
+    text-align: center;
+    background-color: var(--twitter-color);
+    color: #fff;
+    padding: 10px 0;
+    width: 100%;
+}
+
+.admin nav svg {
+    font-size: 40px !important;
+}
+
+.admin nav span {
+    font-size: 30px;
+    font-weight: 700;
+}
+
+.admin table th{font-weight: 700;}
+
+.admin table *{
+    font-size:1.1rem;
+}

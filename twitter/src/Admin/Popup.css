@@ -1,0 +1,36 @@
+.popup {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    margin: auto;
+    z-index: 20;
+    background-color: rgba(0, 0, 0, 0.5);
+}
+
+.popup_inner {
+    position: absolute;
+    left: 25%;
+    right: 25%;
+    top: 25%;
+    bottom: 25%;
+    margin: auto;
+    background: white;
+    overflow:scroll;
+    overflow-wrap: break-word;
+    padding:20px;
+    border-radius:20px;
+}
+
+.popup_inner button{
+    background:rgb(225, 61, 61);
+    color:white;
+    font-size:15px;
+    padding:2px 5px;
+}
+
+
+.popup_inner td{
+    padding:10px;
+}
