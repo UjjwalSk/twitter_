@@ -17,20 +17,20 @@
     bottom: 25%;
     margin: auto;
     background: white;
-    overflow:scroll;
+    overflow: scroll;
     overflow-wrap: break-word;
-    padding:20px;
-    border-radius:20px;
+    padding: 20px;
+    border-radius: 20px;
+    height: 80%;
 }
 
-.popup_inner button{
-    background:rgb(225, 61, 61);
-    color:white;
-    font-size:15px;
-    padding:2px 5px;
+.popup_inner button {
+    background: rgb(225, 61, 61);
+    color: white;
+    font-size: 15px;
+    padding: 2px 5px;
 }
 
-
-.popup_inner td{
-    padding:10px;
+.popup_inner td {
+    padding: 10px;
 }

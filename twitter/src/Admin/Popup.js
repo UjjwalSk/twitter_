@@ -3,9 +3,9 @@ import "./Popup.css"
 
 const Popup = (props) => {
     return (
-        <div>
+        <>
             {
-                props.popup != -1 && <div className="popup h-[150%] overflow-scroll">
+                props.popup != -1 && <div className="popup overflow-scroll">
                     <div className='popup_inner rounded-lg p-7 overflow-y-scroll'>
                         <div>
                             <h1 className='text-2xl font-bold inline-block'>
@@ -19,9 +19,13 @@ const Popup = (props) => {
                                     {
                                         Object.keys(props.data).map((e) => {
                                             return (
-                                                e != "_id" && e != "longitude" && e != "latitude" && <tr className='border'>
+                                                <tr className='border'>
                                                     <td className='font-bold p-4 border'>{e[0].toUpperCase() + e.substr(1,)}</td>
-                                                    <td className='p-2'>{props.data[e] ? props.data[e] : "---"}</td>
+                                                    <td className='p-2'>
+                                                        {
+                                                            e === "gif" ? <img src={props.data[e]} alt="gif" className='w-40 h-40' /> : props.data[e] ? props.data[e] : "---"
+                                                        }
+                                                    </td>
                                                 </tr>
                                             )
                                         })
@@ -32,7 +36,7 @@ const Popup = (props) => {
                     </div>
                 </div>
             }
-        </div>
+        </>
     )
 }
 

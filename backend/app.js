@@ -116,7 +116,6 @@ app.get("/logout", (req, res) => {
 // tweets
 
 const checkAuth = (req, res, next) => {
-  console.log(req.session)
   if (req.session.user) {
     next();
   } else {
@@ -136,11 +135,16 @@ app.post('/tweets', checkAuth, (req, res) => {
 });
 
 app.get('/tweets/:flag?/:user?', checkAuth, (req, res) => {
+  console.log(req.params.flag)
+  console.log(req.params.user);
   let sqlQuery = "SELECT tweets.id,name,username,body,gif,created FROM tweets INNER JOIN users ON users.id = tweets.user" +
-    (req.params.flag ?
+    (req.params.flag === "user" ?
       (req.params.user ? " WHERE username='" + (req.params.user) + "'" : " WHERE tweets.user=" + (req.session.user.id))
-      : "") +
+      :
+      req.params.flag === "date" ? ` where MONTH(created)=MONTH('${req.params.user}-01')` : ""
+    ) +
     " ORDER BY tweets.created DESC";
+
   let query = conn.query(sqlQuery, (err, results) => {
     if (err) throw err;
     else {
@@ -180,4 +184,14 @@ app.get("/loggedIn", (req, res) => {
 
 app.listen(PORT, () => {
   console.log(`Server started on port ${PORT}...`);
+});
+
+// admin 
+
+app.delete('/admin/delete/:handle?/:id?', checkAuth, (req, res) => {
+  let sqlQuery = "DELETE FROM tweets WHERE id=" + req.params.id;
+  let query = conn.query(sqlQuery, (err, results) => {
+    if (err) res.status(500).json({ success: "Can't DELETE" });
+    else res.status(200).json({ success: "Tweet deleted successfully" });
+  });
 });

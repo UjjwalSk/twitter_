@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import TwitterIcon from "@material-ui/icons/Twitter";
 import "./Admin.css"
 import Table from '@material-ui/core/Table';
@@ -10,17 +10,18 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from "../Api";
 import Popup from "./Popup";
+import AuthContext from "../context/AuthContext";
+import { useNavigate } from "react-router-dom";
 
 const Admin = () => {
-    const rows = [
-        { name: 'Cupcake', calories: 305, fat: 3.7, carbs: 67, protein: 4.3 },
-    ];
+    const { getLoggedIn } = useContext(AuthContext);
+    const navigate = useNavigate();
     const [tweets, setTweets] = useState([]);
-    const [update, setUpdate] = useState(false);
     const [users, setUsers] = useState([]);
     const [popup, setPopup] = useState(-1);
     const [selected, setSelected] = useState(-1);
     const [tweet, setTweet] = useState({});
+    const [date, setDate] = useState("");
 
     useEffect(() => {
         axios.get("/tweets", { withCredentials: true })
@@ -38,17 +39,32 @@ const Admin = () => {
                 console.log(err);
             })
 
-    }, [update]);
+    }, []);
 
-    const getTweet = (user) => {
-        setSelected(user);
-        axios.get(`/tweets/user/${user}`, { withCredentials: true })
-            .then((res) => {
-                setTweets(res.data);
-            })
-            .catch((err) => {
-                console.log(err);
-            })
+    const getTweet = (user, flag) => {
+        if (flag) {
+            setSelected(user);
+            console.log("calldaldldklas")
+            axios.get(user == -1 ? `/tweets` : `/tweets/user/${user}`, { withCredentials: true })
+                .then((res) => {
+                    setTweets(res.data);
+                    console.log(res.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        } else {
+            setDate(user);
+            console.log(user);
+            axios.get(!user ? `/tweets` : `/tweets/date/${user}`, { withCredentials: true })
+                .then((res) => {
+                    setTweets(res.data);
+                    console.log(res.data)
+                })
+                .catch((err) => {
+                    console.log(err);
+                })
+        }
     };
 
     return (
@@ -56,6 +72,13 @@ const Admin = () => {
             <nav>
                 <TwitterIcon />
                 <span>Admin Panel</span>
+                <button className='loggOutIcon' onClick={async () => {
+                    await axios.get("/logout", { withCredentials: true }).then(() => {
+                        getLoggedIn();
+                        navigate("/");
+                    });
+                }
+                }>Logout</button>
             </nav>
             <TableContainer component={Paper} elevation={3}>
                 <Table sx={{ minWidth: 650 }} aria-label="simple table">
@@ -65,7 +88,7 @@ const Admin = () => {
                             <TableCell align="center">
                                 <>
                                     <span>Username</span><br />
-                                    <select onChange={(e) => getTweet(e.target.value)}>
+                                    <select onChange={(e) => getTweet(e.target.value, true)}>
                                         <option value={-1} selected={selected === -1}>All</option>
                                         {
                                             users.map((u) => {
@@ -77,7 +100,12 @@ const Admin = () => {
                             </TableCell>
                             <TableCell align="center">Full Name</TableCell>
                             <TableCell align="center">Tweet Msg</TableCell>
-                            <TableCell align="center">Created</TableCell>
+                            <TableCell align="center">
+                                Created
+                                <>
+                                    <input type="month" id="month" name="month" min="2022-10" onChange={(e) => getTweet(e.target.value, false)} />
+                                </>
+                            </TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -94,9 +122,9 @@ const Admin = () => {
                                 <TableCell align="center" style={{ textDecoration: "underline", cursor: "pointer" }} onClick={() => { setTweet(t); setPopup(t.id); }}>{t.body.substr(0, 20)}...</TableCell>
                                 <TableCell align="center">{new Date(t.created).toLocaleDateString()}</TableCell>
                                 <TableCell align="center"><button onClick={async () => {
-                                    await axios.delete(`/tweets/${t.id}`, { withCredentials: true })
+                                    await axios.delete(`/admin/delete/tweet/${t.id}`, { withCredentials: true })
                                         .then((res) => {
-                                            setUpdate(!update);
+                                            getTweet(-1, true);
                                         })
                                         .catch((err) => {
                                             console.log(err);

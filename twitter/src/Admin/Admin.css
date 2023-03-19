@@ -7,7 +7,7 @@
 
 .admin .MuiTableContainer-root {
     width: 70%;
-    margin-top:30px;
+    margin-top: 30px;
 }
 
 .admin nav {
@@ -27,8 +27,21 @@
     font-weight: 700;
 }
 
-.admin table th{font-weight: 700;}
+.admin table th {
+    font-weight: 700;
+}
 
-.admin table *{
-    font-size:1.1rem;
+.admin table * {
+    font-size: 1.1rem;
+}
+
+.admin .loggOutIcon {
+    float: right;
+    margin: 0 20px;
+    font-size: 15px !important;
+    cursor: pointer;
+    background: black;
+    border-radius: 20px;
+    padding: 10px 30px;
+    color: white;
 }

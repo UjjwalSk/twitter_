@@ -11,7 +11,7 @@ function Feed() {
     const [update, setUpdate] = useState(false);
 
     useEffect(() => {
-        axios.get("/tweets/mine", { withCredentials: true }).then((res) => {
+        axios.get("/tweets/user", { withCredentials: true }).then((res) => {
             setPosts(res.data);
         });
     }, [update]);
